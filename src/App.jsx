@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
 import moviesData from "./data/movies";
+import AddMovieForm from "./components/AddMovieForm";
 
 export default function App() {
   const [movies, setMovies] = useState(moviesData);
@@ -22,6 +23,9 @@ const handleDeleteMovie = (id) => {
   );
 };
 
+const handleAddMovie = (newMovie) => {
+  setMovies([...movies, newMovie]);
+};
   return (
     <Layout>
       <div className="mb-6">
@@ -30,11 +34,13 @@ const handleDeleteMovie = (id) => {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
+      <AddMovieForm onAddMovie={handleAddMovie} />
+
       <MovieList
-  movies={movies}
-  onToggleWatched={handleToggleWatched}
-  onDelete={handleDeleteMovie}
-/>
+        movies={movies}
+        onToggleWatched={handleToggleWatched}
+        onDelete={handleDeleteMovie}
+      />
     </Layout>
   );
 }
