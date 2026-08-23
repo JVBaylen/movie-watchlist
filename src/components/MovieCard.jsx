@@ -7,6 +7,7 @@ export default function MovieCard({
   rating,
   watched,
   onToggleWatched,
+  onDelete,
 }) {
   return (
     <div className="card bg-base-100 shadow-xl">
@@ -41,6 +42,12 @@ export default function MovieCard({
       >
         {watched ? "Watched ✓" : "Unwatched"}
       </button>
+      <button
+       onClick={() => onDelete(id)}
+       className="btn btn-error btn-sm"
+        >
+  Delete
+</button>
           {/* TODO: conditional — if watched, show "Watched ✓" (badge badge-success);
               otherwise show "Unwatched" (badge badge-ghost) */}
         </div>
