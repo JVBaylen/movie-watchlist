@@ -4,6 +4,7 @@ import MovieList from "./components/MovieList";
 import moviesData from "./data/movies";
 import AddMovieForm from "./components/AddMovieForm";
 import FilterBar from "./components/FilterBar";
+import SummaryBar from "./components/SummaryBar";
 
 export default function App() {
   const [movies, setMovies] = useState(moviesData);
@@ -42,6 +43,8 @@ const visibleMovies = movies.filter((movie) => {
         </p>
       </div>
       <AddMovieForm onAddMovie={handleAddMovie} />
+
+      <SummaryBar movies={movies} />
 
       <FilterBar
         currentFilter={filter}
