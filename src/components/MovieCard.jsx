@@ -13,8 +13,8 @@ export default function MovieCard({
     <div className="card bg-base-100 shadow-xl">
       <figure>
         <img
-          src={/* TODO: props */ "poster"}
-          alt={/* TODO: props */ "title"}
+          src={/* TODO: props */ poster}
+          alt={/* TODO: props */ title}
           className="w-full h-80 object-cover"
         />
       </figure>
