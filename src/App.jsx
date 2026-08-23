@@ -6,6 +6,16 @@ import moviesData from "./data/movies";
 export default function App() {
   const [movies, setMovies] = useState(moviesData);
 
+  const handleToggleWatched = (id) => {
+  setMovies(
+    movies.map((movie) =>
+      movie.id === id
+        ? { ...movie, watched: !movie.watched }
+        : movie
+    )
+  );
+};
+
   return (
     <Layout>
       <div className="mb-6">
@@ -14,7 +24,10 @@ export default function App() {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
-      <MovieList movies={movies} />
+      <MovieList
+  movies={movies}
+  onToggleWatched={handleToggleWatched}
+/>
     </Layout>
   );
 }
