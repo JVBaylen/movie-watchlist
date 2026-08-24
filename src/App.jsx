@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "./layouts/Layout";
 import MovieList from "./components/MovieList";
 import moviesData from "./data/movies";
@@ -48,6 +48,13 @@ const handleDeleteMovie = (id) => {
 const handleAddMovie = (newMovie) => {
   setMovies([...movies, newMovie]);
 };
+
+const handleClearAll = () => {
+  if (confirm("Clear your entire watchlist? This cannot be undone.")) {
+    setMovies([]);
+  }
+};
+
 const visibleMovies = movies.filter((movie) => {
   if (filter === "watched") return movie.watched;
   if (filter === "unwatched") return !movie.watched;
@@ -64,6 +71,9 @@ const visibleMovies = movies.filter((movie) => {
       <AddMovieForm onAddMovie={handleAddMovie} />
 
       <SummaryBar movies={movies} />
+      <button className="btn btn-error btn-sm" onClick={handleClearAll}>
+        Clear All
+      </button>
 
       <FilterBar
         currentFilter={filter}
