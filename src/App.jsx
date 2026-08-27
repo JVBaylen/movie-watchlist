@@ -7,6 +7,7 @@ import FilterBar from "./components/FilterBar";
 import SummaryBar from "./components/SummaryBar";
 import SearchBar from "./components/SearchBar";
 import { searchMovies, toWatchlistMovie } from "./api/tmdb";
+import SearchResults from "./components/SearchResults";
 
 export default function App() {
   const [movies, setMovies] = useState(() => {
@@ -81,6 +82,10 @@ const handleAddMovie = (newMovie) => {
   setMovies([...movies, newMovie]);
 };
 
+const handleAddFromSearch = (movie) => {
+  setMovies([...movies, movie]);
+};
+
 const handleClearAll = () => {
   if (confirm("Clear your entire watchlist? This cannot be undone.")) {
     setMovies([]);
@@ -102,6 +107,15 @@ const visibleMovies = movies.filter((movie) => {
       </div>
 
       <SearchBar onSearch={setQuery} />
+
+      <SearchResults
+        results={results}
+        onAdd={handleAddFromSearch}
+        isLoading={loading}
+        error={error}
+      />
+
+      <hr className="my-6" />
 
       <AddMovieForm onAddMovie={handleAddMovie} />
 
