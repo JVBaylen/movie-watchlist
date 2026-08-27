@@ -5,6 +5,8 @@ import moviesData from "./data/movies";
 import AddMovieForm from "./components/AddMovieForm";
 import FilterBar from "./components/FilterBar";
 import SummaryBar from "./components/SummaryBar";
+import SearchBar from "./components/SearchBar";
+import { searchMovies, toWatchlistMovie } from "./api/tmdb";
 
 export default function App() {
   const [movies, setMovies] = useState(() => {
@@ -17,6 +19,11 @@ const [filter, setFilter] = useState(() => {
   return localStorage.getItem("filter") || "all";
 });
 
+const [query, setQuery] = useState("");
+const [results, setResults] = useState([]);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState("");
+
   useEffect(() => {
   localStorage.setItem("movies", JSON.stringify(movies));
 }, [movies]);
@@ -28,6 +35,31 @@ useEffect(() => {
 useEffect(() => {
   localStorage.setItem("filter", filter);
 }, [filter]);
+
+useEffect(() => {
+  if (!query) {
+    setResults([]);
+    return;
+  }
+
+  const fetchMovies = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const data = await searchMovies(query);
+      setResults(data.map(toWatchlistMovie));
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load movies.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchMovies();
+}, [query]);
+
 
   const handleToggleWatched = (id) => {
   setMovies(
@@ -68,6 +100,9 @@ const visibleMovies = movies.filter((movie) => {
           A collection of movies I've watched and want to watch.
         </p>
       </div>
+
+      <SearchBar onSearch={setQuery} />
+
       <AddMovieForm onAddMovie={handleAddMovie} />
 
       <SummaryBar movies={movies} />
